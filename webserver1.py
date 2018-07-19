@@ -5,8 +5,6 @@
 
 @author:  amethystzh
 
-@license: (C) Copyright 2017-2018, JD.com
-
 @contact: amethystzh@msn.com
 
 @software: IntelliJ IDEA
@@ -15,7 +13,7 @@
 
 @time: 2018/7/19 10:47
 
-@desc:
+@desc: for self trial
 
 """
 
