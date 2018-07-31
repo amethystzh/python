@@ -19,7 +19,7 @@
 
 import logging
 import os
-from flask import Flask
+from flask import Flask, request
 
 FILE_NAME = os.path.basename(__file__)
 FILENAME = os.path.splitext(FILE_NAME)[0]
@@ -46,6 +46,16 @@ def projects():
 @app.route('/about')
 def about():
     return 'The about page'
+
+
+@app.route('/test', methods=['GET', 'POST'])
+def test():
+    if request.method == 'POST':
+        json_obj = request.get_json()
+        print json_obj
+        return 'this is test input dealt: %s' % json_obj
+    else:
+        return 'this is test module GET return'
 
 
 if __name__ == '__main__':
