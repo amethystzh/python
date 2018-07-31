@@ -1,6 +1,8 @@
 #!/usr/bin/env python
 # encoding: utf-8
 
+# this service depends on module flask, '# pip install Flask' if needed
+
 """
 
 @author:  amethystzh
@@ -9,7 +11,7 @@
 
 @software: IntelliJ IDEA
 
-@file: hello.py
+@file: testCheckingService.py
 
 @time: 2018/7/31 11:27
 
@@ -29,30 +31,20 @@ app = Flask(__name__)
 
 
 @app.route('/')
-def hello_world():
-    return 'Hello World!'
+def root_url():
+    return 'this root url should not be accessed'
 
 
-@app.route('/hello')
-def hello():
-    return 'sub page hello'
-
-
-@app.route('/projects/')
-def projects():
-    return 'The project page'
-
-
-@app.route('/about')
+@app.route('/help')
 def about():
-    return 'The about page'
+    return 'supported API: host/test, POST and GET'
 
 
 @app.route('/test', methods=['GET', 'POST'])
-def test():
+def testCheckingService():
     if request.method == 'POST':
         json_obj = request.get_json()
-        print json_obj
+        logging.info(json_obj)
         return 'this is test input dealt: %s' % json_obj
     else:
         return 'this is test module GET return'
