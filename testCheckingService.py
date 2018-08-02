@@ -21,15 +21,63 @@
 
 import logging
 import os
+import mysql.connector
 from flask import Flask, request
+
 
 FILE_NAME = os.path.basename(__file__)
 FILENAME = os.path.splitext(FILE_NAME)[0]
 LOG_NAME = FILENAME + '.log'
 
+# mysql config
+DB_CONFIG = {
+    'user': 'root',
+    'password': 'root123',
+    'host': '172.27.37.42',
+    'port': '8306',
+    'database': 'qoc',
+    'use_unicode': True,
+}
+
 app = Flask(__name__)
 
 details = []
+
+
+def connect_db(db_config):
+    logging.debug('connecting to mysql...')
+    # open mysql connection
+    db = mysql.connector.connect(**db_config)
+    logging.debug('connected')
+    return db
+
+
+def query(db_config, sql):
+    # connect to db
+    db = connect_db(db_config)
+
+    cursor = db.cursor()
+    result = []
+
+    try:
+        cursor.execute(sql)
+        rsp = cursor.fetchall()
+
+        for row in rsp:
+            line = []
+            for i in range(len(row)):
+                line.append(row[i])
+            result.append(line)
+    except mysql.connector.Error as err:
+        logging.error('unable to query data due to %s' % err)
+
+    close_db(db)
+
+    return result
+
+
+def close_db(db):
+    db.close()
 
 
 @app.route('/')
@@ -81,8 +129,11 @@ def testCheckingService():
                 detail_item = dict(processid=processid, log_id=i, ops_user=ops_user, ops_time=ops_time, ops=ops,
                                    test_result=result, test_note=note)
                 details.append(detail_item)
+            else:
+                logging.warn('there is no existing records yet, should be a NEW ops first')
 
         return 'the result of POST method: %s' % details
+    # curl -s http://127.0.0.1:5000/test
     elif request.method == 'GET':
         if details:
             for i in range(len(details)):
