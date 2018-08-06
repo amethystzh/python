@@ -22,6 +22,7 @@
 import logging
 import os
 import jsonschema
+from jsonschema import FormatChecker
 
 FILE_NAME = os.path.basename(__file__)
 FILENAME = os.path.splitext(FILE_NAME)[0]
@@ -67,7 +68,7 @@ schema = {
 
 def validate_json(input_json, template):
     try:
-        jsonschema.validate(input_json, template)
+        jsonschema.validate(input_json, template, format_checker=FormatChecker())
         msg = "input json is valid"
         return 0, msg
     except jsonschema.ValidationError as ex:
@@ -96,8 +97,8 @@ if __name__ == '__main__':
     logging.getLogger('').addHandler(console)
     
     req1 = {"processid": 3, "ops_user": "Henry", "ops_time": "2018-08-06 15:09:49", "ops": "new", "result": "http://jfactory.jd.com", "note": "Fiana"}
-    req2 = {"processid": 1, "ops_user": "Jerry", "ops_time": "2018-08-06 16:49:49", "ops": "pass", "result": "http://jfactory.jd.com", "note": "test skipped"}
-    req3 = {"processid": 1, "ops_user": "Jerry", "ops_time": "2018-08-03 16:49:49", "ops": "unst", "result": "http://jfactory.jd.com", "note": "regression skipped"}
+    req2 = {"processid": 1, "ops_user": "Jerry@jd.com", "ops_time": "this is a date", "ops": "pass", "result": "http://jfactory.jd.com", "note": "test skipped"}
+    req3 = {"processid": 1, "ops_user": "Jerry@jd.com", "ops_time": "2018-08-03 16:49:49", "ops": "unst", "result": "http://jfactory.jd.com", "note": "regression skipped"}
 
     return_code, return_msg = validate_json(req1, schema)
     if return_code:
