@@ -82,12 +82,12 @@ details = []
 
 @app.route('/')
 def root_url():
-    return 'this root url should not be accessed'
+    return '<html><h1>this root url should not be accessed</h1></html>'
 
 
 @app.route('/help')
 def about():
-    return 'supported API: host/test, POST and GET'
+    return '<html><a href="https://cf.jd.com/pages/viewpage.action?pageId=122140533">API documents</a></html>'
 
 
 @app.route('/test', methods=['GET', 'POST'])
