@@ -21,7 +21,7 @@
 
 import logging
 import os
-import mysql.connector
+# import mysql.connector
 from flask import Flask, request
 
 
@@ -44,40 +44,40 @@ app = Flask(__name__)
 details = []
 
 
-def connect_db(db_config):
-    logging.debug('connecting to mysql...')
-    # open mysql connection
-    db = mysql.connector.connect(**db_config)
-    logging.debug('connected')
-    return db
-
-
-def query(db_config, sql):
-    # connect to db
-    db = connect_db(db_config)
-
-    cursor = db.cursor()
-    result = []
-
-    try:
-        cursor.execute(sql)
-        rsp = cursor.fetchall()
-
-        for row in rsp:
-            line = []
-            for i in range(len(row)):
-                line.append(row[i])
-            result.append(line)
-    except mysql.connector.Error as err:
-        logging.error('unable to query data due to %s' % err)
-
-    close_db(db)
-
-    return result
-
-
-def close_db(db):
-    db.close()
+# def connect_db(db_config):
+#     logging.debug('connecting to mysql...')
+#     # open mysql connection
+#     db = mysql.connector.connect(**db_config)
+#     logging.debug('connected')
+#     return db
+#
+#
+# def query(db_config, sql):
+#     # connect to db
+#     db = connect_db(db_config)
+#
+#     cursor = db.cursor()
+#     result = []
+#
+#     try:
+#         cursor.execute(sql)
+#         rsp = cursor.fetchall()
+#
+#         for row in rsp:
+#             line = []
+#             for i in range(len(row)):
+#                 line.append(row[i])
+#             result.append(line)
+#     except mysql.connector.Error as err:
+#         logging.error('unable to query data due to %s' % err)
+#
+#     close_db(db)
+#
+#     return result
+#
+#
+# def close_db(db):
+#     db.close()
 
 
 @app.route('/')
@@ -135,6 +135,14 @@ def testCheckingService():
         return 'the result of POST method: %s' % details
     # curl -s http://127.0.0.1:5000/test
     elif request.method == 'GET':
+        processid = request.args.get('processid')
+        if processid == 'all':
+            logging.info('get processid= all, actual=%s', processid)
+        elif processid:
+            logging.info('get processid=%s', processid)
+        else:
+            logging.info('not get processid')
+
         if details:
             for i in range(len(details)):
                 logging.info('ops_user%d = %s, ops%d = %s' % (i, details[i]['ops_user'], i, details[i]['ops']))
