@@ -80,7 +80,7 @@ if __name__ == '__main__':
 
     os_alias = os.name
     if os_alias == 'nt':
-        LOG_DIR = 'D:/temp/'
+        LOG_DIR = 'C:/ide_log/'
     else:
         LOG_DIR = os.getcwd()
 
@@ -96,9 +96,9 @@ if __name__ == '__main__':
     console.setFormatter(formatter)
     logging.getLogger('').addHandler(console)
     
-    req1 = {"processid": 3, "ops_user": "Henry", "ops_time": "2018-08-06 15:09:49", "ops": "new", "result": "http://jfactory.jd.com", "note": "Fiana"}
+    req1 = {"processid": 3, "ops_user": "Henry@jd.com", "ops_time": "2018-08-06 15:09:49", "ops": "new", "result": "http://jfactory.jd.com", "note": "Fiana"}
     req2 = {"processid": 1, "ops_user": "Jerry@jd.com", "ops_time": "this is a date", "ops": "pass", "result": "http://jfactory.jd.com", "note": "test skipped"}
-    req3 = {"processid": 1, "ops_user": "Jerry@jd.com", "ops_time": "2018-08-03 16:49:49", "ops": "unst", "result": "http://jfactory.jd.com", "note": "regression skipped"}
+    req3 = {"processid": 1, "ops_user": "Jerry@jd.com", "ops_time": "2018-08-03 16:49:49", "ops": "skip", "result": "http://jfactory.jd.com", "note": "regression skipped"}
 
     return_code, return_msg = validate_json(req1, schema)
     if return_code:
