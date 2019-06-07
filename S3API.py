@@ -140,8 +140,8 @@ class S3API:
 
 if __name__ == '__main__':
     obj = S3API()
-    obj.connect_db(obj.db_config)
-    obj.close_db()
+    # obj.connect_db(obj.db_config)
+    # obj.close_db()
 
     AK = '446FBB1C8616B811A6EE3FB5B0E4357E'
     SK = '2EC52EEB9A3298DDB102A0C7311EB11C'
@@ -160,10 +160,10 @@ if __name__ == '__main__':
     rsp = s3.list_objects(Bucket=bucket_name)
     logging.info(rsp)
 
-    filename = 'folder_path/filename.txt'
-    rsp = s3.upload_file(filename, bucket_name, 'test.log')
+    filename = 'README.md'
+    rsp = s3.upload_file(filename, bucket_name, 'test.txt')
     logging.info(rsp)
 
     # rsp = s3.download_file(bucket_name, 'test.log', 'test-reports/s3_obj.xml')
-    rsp = s3.download_file(bucket_name, 'test.log', 'log/test.log')
+    rsp = s3.download_file(bucket_name, 'test.txt', 'test.log')
     logging.info(rsp)
