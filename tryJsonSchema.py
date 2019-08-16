@@ -3,11 +3,9 @@
 
 """
 
-@author:  zcb 
+@author:  amethystzh
 
-@license: (C) Copyright 2017-2018, JD.com
-
-@contact: zhanchibing@jd.com
+@contact: amethystzh@msn.com
 
 @software: IntelliJ IDEA
 
