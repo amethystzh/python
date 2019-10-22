@@ -1,22 +1,11 @@
 #!/usr/bin/env python
 # encoding: utf-8
 
-"""
-
+"""!
+@file:
 @author: zcb
-
-@license: 
-
-@contact: 
-
-@software: IntelliJ IDEA
-
-@file: S3API.py
-
 @time: 2019/6/5 15:20
-
-@desc:
-
+@desc: this contains the python implement of S3 compatible API, for doxygen usage comments
 """
 
 import logging
@@ -47,6 +36,13 @@ logging.getLogger('').addHandler(console)
 
 
 class S3API:
+    """!
+    this is the API implement class.
+    this class contains methods of common usage
+    @author AmethystZh
+    @date 2019-10-22
+    @version 1.1
+    """
     # env config
     DEV_ENV = ('10.0.0.*', '10.1.0.*', '10.2.1.*', '10.3.4.5')  # PC, laptop, dev-vm
     TEST_ENV = ('192.168.1.1', '172.168.1.1')  # HuangCun jenkins, HuaDong jenkins
@@ -93,6 +89,9 @@ class S3API:
     db_connection = None
 
     def __init__(self):
+        """!
+        this is the initial of class object.
+        """
         host_ip = self.get_host_ip()
         logging.debug('local ip is: %s', host_ip)
         self.db_config = self.get_env(host_ip)
@@ -100,7 +99,9 @@ class S3API:
 
     @staticmethod
     def get_host_ip():
-        """ retrieve local host ip address """
+        """!
+        retrieve local host ip address.
+        """
         s = socket.socket()
         try:
             s = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
@@ -112,7 +113,11 @@ class S3API:
 
     @staticmethod
     def get_env(host_ip):
-        """ assign env var according to local ip """
+        """!
+        assign env var according to local ip.
+        @param host_ip the ip address of host
+        @return the corresponding db environment configure can be used in dev/test
+        """
         local_host_ip = host_ip
         logging.debug('host ip is: %s', local_host_ip)
         if local_host_ip in S3API.ONLINE_ENV:
@@ -124,7 +129,11 @@ class S3API:
         return env_db
 
     def connect_db(self, db_config):
-        """ this function is used to connect to mysql db using db_config """
+        """!
+        this function is used to connect to mysql db using db_config.
+        @param db_config database configure file
+        @return void
+        """
         mysql_host = db_config['host']
         mysql_db = db_config['database']
         logging.debug('connecting to mysql %s', mysql_host)
@@ -133,7 +142,9 @@ class S3API:
         logging.debug('connected and use db %s', mysql_db)
 
     def close_db(self):
-        """ this function is used to release db connection after used mysql """
+        """!
+        this function is used to release db connection after used mysql.
+        """
         self.db_connection.close()
         logging.debug('mysql connection closed')
 
